@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+
+ASDF_INSTALL_TYPE=${ASDF_INSTALL_TYPE:-version  }
+TMPDIR=${TMPDIR:-/tmp}
+[ -n "$ASDF_INSTALL_VERSION" ] || (>&2 echo 'Missing ASDF_INSTALL_VERSION' && exit 1)
+[ -n "$ASDF_DOWNLOAD_PATH" ] || (>&2 echo 'Missing ASDF_DOWNLOAD_PATH' && exit 1)
+
+echo 'Downloading...'
+curl -sSL "https://ftp.gnu.org/pub/gnu/gettext/gettext-${ASDF_INSTALL_VERSION}.tar.gz" -o "${ASDF_DOWNLOAD_PATH}/gettext.tar.gz"
+
+echo 'Extracting...'
+tar xzf "${ASDF_DOWNLOAD_PATH}/gettext.tar.gz" -C "$ASDF_DOWNLOAD_PATH"
+rm "${ASDF_DOWNLOAD_PATH}/gettext.tar.gz"
